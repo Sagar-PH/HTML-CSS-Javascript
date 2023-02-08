@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+<body>
+    <div class="main-div">
+        <div class="inner-div">
+            <h3 class="question">What is my name?</h3>
+            <ul>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="ans1">
+                    <label for="ans1" id="option1">Option 1</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="ans2">
+                    <label for="ans2" id="option2">Option 2</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="ans3">
+                    <label for="ans3" id="option3">Option 3</label>
+                </li>
+                <li>
+                    <input type="radio" name="answer" class="answer" id="ans4">
+                    <label for="ans4" id="option4">Option 4</label>
+                </li>
+            </ul>
+            <button type="submit" id="submit" class="btn">Submit</button>
+            <div id="showScore" class="scoreArea"></div>      
+        </div>
+    </div>
+    
+</body>
+<script>
+
+</script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: 300;
+        
+    }
+    .main-div {
+        width: 100vw;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(to right, #00AAFF, #00FF6C);
+    }
+    .inner-div {
+        width: 40vw;
+        background-color: #fff;
+        padding: 1rem 5rem;
+        border-radius: 1rem;
+        box-shadow: 0 1rem 1rem rgba(0, 0,0 ,0.4);
+    }
+    .inner-div h3 {
+        font-size: 2rem;
+        font-weight: 500;
+        margin: 1rem 0 2rem 0;
+
+    }
+    .inner-div li {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        list-style: none;
+    }
+    input {
+        cursor: pointer;
+    }
+    #submit, .btn {
+        padding: 0.5rem;
+        outline: none;
+        font-size: 1rem;
+        display: block;
+        margin: auto;
+        border: none;
+        color: white;
+        border-radius: 3px;
+        background-color: darkslateblue;
+        margin-top: 15px;
+    }
+    #submit:hover {
+        background-color: rgb(111, 104, 153);
+        color: black;
+    }
+    #showScore {
+        background-color: #dfe6e9;
+        margin-top: 0.8rem;
+        padding: 1rem;
+        box-shadow: rgb(39, 39, 39);
+        justify-content: center;
+    }
+    .scoreArea {
+        display: none;
+        grid-template-rows: repeat(2, 70px);
+        grid-template-columns: repeat(1,200px);
+    }
+
+    
+</style>
+<script>
+    const quizDB=[
+        {
+            question: "Q1: Which is called the 'metal of the future'?",
+            a: "Lead",
+            b: "Titanium",
+            c: "Platinum",
+            d: "Mercury",
+            ans: "ans2"
+        },
+        {
+            question: "Q2: The world's largest river island 'Majuli' is located in which district of Assam?",
+            a: "Darjeeling",
+            b: "Sivasagar",
+            c: "Pitalpuri",
+            d: "Munawari",
+            ans: "ans3"
+        },
+        {
+            question: "Q3: Which gas is used in the refrigerator?",
+            a: "Oxygen",
+            b: "Nitrogen",
+            c: "Carbon",
+            d: "Freon",
+            ans: "ans4"
+        },
+        {
+            question: "Q4: What are the heater wires made of?",
+            a: "Nichrome",
+            b: "Copper",
+            c: "Silver",
+            d: "Gold",
+            ans: "ans1"
+        }
+    ];
+    const question=document.querySelector('.question');
+    const option1=document.querySelector('#option1');
+    const option2=document.querySelector('#option2');
+    const option3=document.querySelector('#option3');
+    const option4=document.querySelector('#option4');
+    const submit=document.querySelector('#submit');
+    const answers=document.querySelectorAll(".answer");
+    const show=document.getElementById('showScore')
+    let questionCount=0;
+    let score=0;
+    const loadQuestion=() => {
+        const questionList=quizDB[questionCount];
+        question.innerHTML=questionList.question;
+        option1.innerHTML=questionList.a;
+        option2.innerHTML=questionList.b;
+        option3.innerHTML=questionList.c;
+        option4.innerHTML=questionList.d;
+    }
+    loadQuestion();
+    const getCheckAnswer=()=> {
+        let answer;
+        answers.forEach((curAnsElem) => {
+            if(curAnsElem.checked) {
+                answer=curAnsElem.id;
+            }
+        });
+        return answer;
+    };
+    const deselectAll=() => {
+        answers.forEach((curAnsElem) => curAnsElem.checked=false);
+    }
+    submit.addEventListener('click', () => {
+        const checkedAnswer=getCheckAnswer();
+        console.log(checkedAnswer);
+
+        if(checkedAnswer===quizDB[questionCount].ans) {
+            score++;
+        };
+
+        questionCount++;
+        
+
+        if(questionCount < quizDB.length) {
+            loadQuestion();
+            deselectAll();
+        }else {
+            show.innerHTML=`
+                <h3 class="sc">Score ${score}/${quizDB.length}</h3>
+                <button class="btn" onclick="location.reload()">Play Again</button>`;
+            show.style.display="grid";
+        }
+    })
+</script>
+</html>
