@@ -2,7 +2,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 .bgimg {
 	background: url('../images/website.jpg') no-repeat;
