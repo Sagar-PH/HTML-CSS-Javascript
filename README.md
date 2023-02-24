@@ -1,4 +1,4 @@
 # Small-Examples
 Exercise Repository
 
-HTML/CSS/Javascript prjects in gh-pages branch
+HTML/CSS/Javascript projects in gh-pages branch
